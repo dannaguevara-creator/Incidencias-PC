@@ -5,8 +5,24 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Dashboard Tickets Incidencias PC — Interactivo</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js">
+
+/* ═══ GRÁFICO 9: TICKETS POR PERSONA ═══ */
+const OWC=['#2563EB','#7C3AED','#059669','#D97706','#EA580C','#DB2777'];
+const ownerTickets=owns.map(o=>ALL_TICKETS.filter(t=>t.o===o).length);
+const OP=owns.map((o,i)=>({owner:o,count:ownerTickets[i]})).sort((a,b)=>b.count-a.count);
+new Chart(document.getElementById('C9'),{type:'doughnut',data:{labels:OP.map(x=>x.owner),datasets:[{data:OP.map(x=>x.count),backgroundColor:OWC.slice(0,OP.length),borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,cutout:'55%',onClick(e,el){if(!el.length)return;const idx=el[0].index;const own=OP[idx].owner;const tks=ALL_TICKETS.filter(t=>t.o===own);if(tks.length)openPanel('Tickets de '+own,own+' — '+tks.length+' tickets',tks)},plugins:{legend:{position:'right',labels:{font:{size:12,family:F},color:M,padding:15}},datalabels:{color:'#fff',font:{size:12,weight:'700',family:F},formatter:(v,ctx)=>v+' ('+Math.round(v/ALL_TICKETS.length*100)+'%)'}}}}});
+
+</script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chartjs-plugin-datalabels/2.2.0/chartjs-plugin-datalabels.min.js">
+
+/* ═══ GRÁFICO 9: TICKETS POR PERSONA ═══ */
+const OWC=['#2563EB','#7C3AED','#059669','#D97706','#EA580C','#DB2777'];
+const ownerTickets=owns.map(o=>ALL_TICKETS.filter(t=>t.o===o).length);
+const OP=owns.map((o,i)=>({owner:o,count:ownerTickets[i]})).sort((a,b)=>b.count-a.count);
+new Chart(document.getElementById('C9'),{type:'doughnut',data:{labels:OP.map(x=>x.owner),datasets:[{data:OP.map(x=>x.count),backgroundColor:OWC.slice(0,OP.length),borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,cutout:'55%',onClick(e,el){if(!el.length)return;const idx=el[0].index;const own=OP[idx].owner;const tks=ALL_TICKETS.filter(t=>t.o===own);if(tks.length)openPanel('Tickets de '+own,own+' — '+tks.length+' tickets',tks)},plugins:{legend:{position:'right',labels:{font:{size:12,family:F},color:M,padding:15}},datalabels:{color:'#fff',font:{size:12,weight:'700',family:F},formatter:(v,ctx)=>v+' ('+Math.round(v/ALL_TICKETS.length*100)+'%)'}}}}});
+
+</script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{--bg:#F4F5F7;--card:#fff;--text:#111827;--sub:#6B7280;--faint:#D1D5DB;--blue:#2563EB;--green:#059669;--purple:#7C3AED;--orange:#EA580C;--red:#DC2626;--amber:#D97706;--pink:#DB2777;--teal:#0D9488;--indigo:#4F46E5;--slate:#475569;--radius:14px;--shadow:0 1px 2px rgba(0,0,0,.04),0 2px 8px rgba(0,0,0,.04)}
@@ -316,6 +332,23 @@ new Chart(document.getElementById('C7'),{type:'bar',data:{labels:fpLabels,datase
 const feLabels=[...new Set(filteredAll.map(t=>t.s))].sort((a,b)=>filteredAll.filter(t=>t.s===b).length-filteredAll.filter(t=>t.s===a).length);
 const FEC2=['#2563EB','#7C3AED','#059669','#D97706','#DC2626','#9CA3AF'];
 new Chart(document.getElementById('C8'),{type:'bar',data:{labels:feLabels,datasets:[{data:feLabels.map(s=>filteredAll.filter(t=>t.s===s).length),backgroundColor:FEC2,borderWidth:0,borderRadius:6}]},options:{indexAxis:'y',responsive:true,maintainAspectRatio:false,onClick(e,el){if(!el.length)return;const idx=el[0].index;const est=feLabels[idx];const tks=filteredAll.filter(t=>t.s===est);if(tks.length)openPanel('Filtro · '+est,'Rev. Logs Mem.2 con cita Fractalia · Estado: '+est,tks)},plugins:{legend:{display:false},datalabels:{anchor:'end',align:'end',color:ctx=>FEC2[ctx.dataIndex],font:{size:12,weight:'700',family:F},formatter:(v)=>v+' ('+Math.round(v/filteredAll.length*100)+'%)'}},scales:{x:{grid:{color:G},ticks:{font:{size:10,family:F},color:M},suggestedMax:55},y:{grid:{display:false},ticks:{font:{size:12,family:F,weight:'500'},color:'#374151'}}}}});
+
+
+/* ═══ GRÁFICO 9: TICKETS POR PERSONA ═══ */
+const OWC=['#2563EB','#7C3AED','#059669','#D97706','#EA580C','#DB2777'];
+const ownerTickets=owns.map(o=>ALL_TICKETS.filter(t=>t.o===o).length);
+const OP=owns.map((o,i)=>({owner:o,count:ownerTickets[i]})).sort((a,b)=>b.count-a.count);
+new Chart(document.getElementById('C9'),{type:'doughnut',data:{labels:OP.map(x=>x.owner),datasets:[{data:OP.map(x=>x.count),backgroundColor:OWC.slice(0,OP.length),borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,cutout:'55%',onClick(e,el){if(!el.length)return;const idx=el[0].index;const own=OP[idx].owner;const tks=ALL_TICKETS.filter(t=>t.o===own);if(tks.length)openPanel('Tickets de '+own,own+' — '+tks.length+' tickets',tks)},plugins:{legend:{position:'right',labels:{font:{size:12,family:F},color:M,padding:15}},datalabels:{color:'#fff',font:{size:12,weight:'700',family:F},formatter:(v,ctx)=>v+' ('+Math.round(v/ALL_TICKETS.length*100)+'%)'}}}}});
+
 </script>
+
+<div class="card">
+    <div class="card-title">Tickets Asignados por Persona</div>
+    <div class="card-desc">Distribucion de incidencias asignadas a cada miembro del equipo</div>
+    <div class="chart-box" style="height:380px;position:relative">
+        <canvas id="C9"></canvas>
+    </div>
+</div>
+
 </body>
 </html>
