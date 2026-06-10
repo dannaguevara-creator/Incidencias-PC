@@ -220,7 +220,15 @@ function openPanel(title, sub, tickets){
     a.href=HS+t.id;
     a.target='_blank';
     a.rel='noopener';
-    a.innerHTML='<div class="ticket-info"><div class="ticket-id">#'+t.id+'</div><div class="ticket-name">'+t.n+'</div><div class="ticket-meta"><span><span class="status-dot" style="background:'+sc+'"></span>'+t.s+'</span>'+(t.p?'<span>'+t.p+'</span>':'')+'<span>'+t.o+'</span>'+(t.f?'<span>📅 '+t.f+'</span>':'')+'</div></div><span class="ticket-arrow">→</span>';
+    a.innerHTML='<div class="ticket-info"><div class="ticket-id">#'+t.id+'</div><div class="ticket-name">'+t.n+'</div><div class="ticket-meta"><span><span class="status-dot" style="background:'+sc+'"></span>'+t.s+'</span>'+(t.p?'<span>'+t.p+'</span>':'')+'<span>'+t.o+'</span>'+(t.f?'<span>📅 '+t.f+'</span>':'')+'</div>
+
+<div class="card">
+    <div class="card-title">Tickets Asignados por Persona</div>
+    <div class="card-desc">Distribucion de incidencias asignadas a cada miembro del equipo</div>
+    <div class="chart-box" style="height:380px;position:relative">
+        <canvas id="C9"></canvas>
+    </div>
+</div></div><span class="ticket-arrow">→</span>';
     body.appendChild(a);
   });
   document.getElementById('panel').classList.add('open');
@@ -321,13 +329,5 @@ const OWC=['#2563EB','#7C3AED','#059669','#D97706','#EA580C','#DB2777'];
 const ownerTickets=owns.map(o=>ALL_TICKETS.filter(t=>t.o===o).length);
 const OP=owns.map((o,i)=>({owner:o,count:ownerTickets[i]})).sort((a,b)=>b.count-a.count);
 new Chart(document.getElementById('C9'),{type:'doughnut',data:{labels:OP.map(x=>x.owner),datasets:[{data:OP.map(x=>x.count),backgroundColor:OWC.slice(0,OP.length),borderWidth:2,borderColor:'#fff'}]},options:{responsive:true,maintainAspectRatio:false,cutout:'55%',onClick(e,el){if(!el.length)return;const idx=el[0].index;const own=OP[idx].owner;const tks=ALL_TICKETS.filter(t=>t.o===own);if(tks.length)openPanel('Tickets de '+own,own+' — '+tks.length+' tickets',tks)},plugins:{legend:{position:'right',labels:{font:{size:12,family:F},color:M,padding:15}},datalabels:{color:'#fff',font:{size:12,weight:'700',family:F},formatter:(v,ctx)=>v+' ('+Math.round(v/ALL_TICKETS.length*100)+'%)'}}}}});</script>
-
-<div class="card">
-    <div class="card-title">Tickets Asignados por Persona</div>
-    <div class="card-desc">Distribucion de incidencias asignadas a cada miembro del equipo</div>
-    <div class="chart-box" style="height:380px;position:relative">
-        <canvas id="C9"></canvas>
-    </div>
-</div>
 </body>
 </html>
